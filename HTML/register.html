@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Đăng ký</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .social-login button {
+            width: 48%; /* Để 2 nút nằm trên cùng một dòng */
+            margin-right: 2%; /* Tạo khoảng cách giữa 2 nút */
+        }
+
+        .social-login button:last-child {
+            margin-right: 0; /* Loại bỏ margin bên phải của nút cuối cùng */
+        }
+
+        .social-icon {
+            width: 24px; /* Kích thước icon */
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle; /* Căn giữa icon và text */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="register.html">Đăng ký</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container my-5" style="max-width: 400px;">
+        <h2 class="mb-4">Đăng ký tài khoản</h2>
+        <form id="register-form" novalidate>
+            <div class="mb-3">
+                <label for="register-fullname" class="form-label">Họ và Tên *</label>
+                <input type="text" class="form-control" id="register-fullname" required
+                       placeholder="Nhập đầy đủ họ và tên" pattern="^[^\d]+$" />
+                <div class="invalid-feedback">Vui lòng nhập họ và tên hợp lệ.</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-birthdate" class="form-label">Ngày sinh *</label>
+                <input type="date" class="form-control" id="register-birthdate" required />
+                <div class="invalid-feedback">Vui lòng chọn ngày sinh trước năm <?php echo date('Y') - 10; ?>.</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-gender" class="form-label">Giới tính *</label>
+                <select class="form-control" id="register-gender" required>
+                    <option value="">Chọn giới tính</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+                <div class="invalid-feedback">Vui lòng chọn giới tính.</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-email" class="form-label">Gmail *</label>
+                <input type="email" class="form-control" id="register-email" required
+                       placeholder="Nhập địa chỉ Gmail" pattern=".+@gmail\.com$" />
+                <div class="invalid-feedback">Vui lòng nhập địa chỉ Gmail hợp lệ.</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-phone" class="form-label">Số điện thoại *</label>
+                <input type="tel" class="form-control" id="register-phone" required
+                       placeholder="Nhập số điện thoại (10 số)" pattern="^[0-9]{10}$" />
+                <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ (10 chữ số).</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-idcard" class="form-label">Số căn cước / CMND *</label>
+                <input type="text" class="form-control" id="register-idcard" required
+                       placeholder="Nhập số căn cước/CMND (12 số)" pattern="^[0-9]{12}$" />
+                <div class="invalid-feedback">Vui lòng nhập số căn cước/CMND hợp lệ (12 chữ số).</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-username" class="form-label">Tên đăng nhập *</label>
+                <input type="text" class="form-control" id="register-username" required
+                       placeholder="Nhập tên đăng nhập" />
+                <div class="invalid-feedback">Vui lòng nhập tên đăng nhập.</div>
+            </div>
+            <div class="mb-3">
+                <label for="register-password" class="form-label">Mật khẩu *</label>
+                <input type="password" class="form-control" id="register-password" required
+                       placeholder="Nhập mật khẩu (ít nhất 7 ký tự, bắt đầu chữ hoa, có số)"
+                       pattern="^[A-Z].{6,}[0-9]+$" />
+                <div class="invalid-feedback">
+                    Mật khẩu phải bắt đầu bằng chữ hoa, ít nhất 7 ký tự và có ít nhất một số.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="register-password-confirm" class="form-label">Xác nhận mật khẩu *</label>
+                <input type="password" class="form-control" id="register-password-confirm" required
+                       placeholder="Nhập lại mật khẩu" />
+                <div class="invalid-feedback">Mật khẩu xác nhận không khớp.</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+        </form>
+        <div class="mt-3 social-login d-flex justify-content-between">
+            <button type="button" class="btn btn-primary">
+                <img src="../img/facebook_icon.png" alt="Facebook" class="social-icon">
+                Facebook
+            </button>
+            <button type="button" class="btn btn-danger">
+                <img src="../img/google_icon.png" alt="Google" class="social-icon">
+                Google
+            </button>
+        </div>
+        <p class="mt-3">Đã có tài khoản? <a href="login.html">Đăng nhập ngay</a></p>
+    </section>
+
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy; <?php echo date('Y'); ?> SheepHelmet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            updateCartCount();
+
+            $('#register-form').on('submit', function(e) {
+                e.preventDefault();
+                const form = this;
+                $(form).addClass('was-validated');
+                if (!form.checkValidity()) {
+                    return;
+                }
+
+                const fullname = $('#register-fullname').val().trim();
+                const birthdate = $('#register-birthdate').val();
+                const gender = $('#register-gender').val();
+                const email = $('#register-email').val().trim();
+                const phone = $('#register-phone').val().trim();
+                const idcard = $('#register-idcard').val().trim();
+                const username = $('#register-username').val().trim();
+                const password = $('#register-password').val().trim();
+                const passwordConfirm = $('#register-password-confirm').val().trim();
+
+                // Kiểm tra năm sinh trước năm hiện tại 10 năm
+                const birthYear = new Date(birthdate).getFullYear();
+                const currentYear = new Date().getFullYear();
+                if (birthYear > currentYear - 10) {
+                    alert('Năm sinh phải trước năm ' + (currentYear - 10) + '.');
+                    return;
+                }
+
+                if (password !== passwordConfirm) {
+                    alert('Mật khẩu xác nhận không khớp.');
+                    return;
+                }
+
+                let users = JSON.parse(localStorage.getItem('sheephelmet_users') || '[]');
+                if (users.find(u => u.username === username)) {
+                    alert('Tên đăng nhập đã tồn tại.');
+                    return;
+                }
+
+                users.push({ fullname, birthdate, gender, email, phone, idcard, username, password });
+                localStorage.setItem('sheephelmet_users', JSON.stringify(users));
+                alert('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+
+</body>
+</html>

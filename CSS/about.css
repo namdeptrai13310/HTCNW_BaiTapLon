@@ -1,0 +1,14 @@
+.about-container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.mission-vision, .our-story, .our-team, .contact-info {
+    margin-bottom: 40px;
+}
+
+.team-member .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}

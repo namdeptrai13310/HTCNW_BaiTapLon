@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Đăng nhập</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container my-5" style="max-width: 400px;">
+        <h2 class="mb-4">Đăng nhập</h2>
+        <form id="login-form" novalidate>
+            <div class="mb-3">
+                <label for="login-email" class="form-label">Gmail *</label>
+                <input type="email" class="form-control" id="login-email" required
+                    placeholder="Nhập địa chỉ Gmail" pattern=".+@gmail\.com$" />
+                <div class="invalid-feedback">Vui lòng nhập địa chỉ Gmail hợp lệ.</div>
+            </div>
+            <div class="mb-3">
+                <label for="login-password" class="form-label">Mật khẩu *</label>
+                <input type="password" class="form-control" id="login-password" required
+                    placeholder="Nhập mật khẩu" />
+                <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+        </form>
+        <p class="mt-3">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+    </section>
+
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy;
+                <?php echo date('Y'); ?> SheepHelmet. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            updateCartCount();
+
+            $('#login-form').on('submit', function (e) {
+                e.preventDefault();
+                const form = this;
+                $(form).addClass('was-validated');
+                if (!form.checkValidity()) {
+                    return;
+                }
+
+                const email = $('#login-email').val().trim();
+                const password = $('#login-password').val().trim();
+
+                // Check user in localStorage (for demonstration purposes)
+                const users = JSON.parse(localStorage.getItem('sheephelmet_users') || '[]');
+                console.log(users)
+                //  Important:  We are now comparing with email (which is also the username)
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    localStorage.setItem('sheephelmet_logged_in_user', JSON.stringify(user));
+                    alert('Đăng nhập thành công!');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Gmail hoặc mật khẩu không đúng.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

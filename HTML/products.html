@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Tất cả sản phẩm</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filters -->
+    <section class="container my-4">
+        <h2 class="mb-4">Tất cả sản phẩm</h2>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="filter-type" class="form-label">Loại nón</label>
+                <select id="filter-type" class="form-select">
+                    <option value="">Tất cả</option>
+                    <option value="fullface">Nón Full Face</option>
+                    <option value="half">Nón 1/2</option>
+                    <option value="threequarter">Nón 3/4</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filter-price" class="form-label">Khoảng giá</label>
+                <select id="filter-price" class="form-select">
+                    <option value="">Tất cả</option>
+                    <option value="0-500000">Dưới 500,000 ₫</option>
+                    <option value="500000-1000000">500,000 ₫ - 1,000,000 ₫</option>
+                    <option value="1000000-1500000">1,000,000 ₫ - 1,500,000 ₫</option>
+                    <option value="1500000-9999999">Trên 1,500,000 ₫</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="row" id="products-list">
+            <!-- Products will be injected here by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 SheepHelmet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            function filterProducts() {
+                const type = $('#filter-type').val();
+                const priceRange = $('#filter-price').val();
+                let filtered = products;
+
+                if (type) {
+                    filtered = filtered.filter(p => p.type === type);
+                }
+
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    filtered = filtered.filter(p => p.price >= min && p.price <= max);
+                }
+
+                renderProducts('#products-list', p => filtered.includes(p));
+            }
+
+            $('#filter-type, #filter-price').on('change', filterProducts);
+
+            // Initial render all products
+            renderProducts('#products-list', () => true);
+        });
+    </script>
+</body>
+</html>

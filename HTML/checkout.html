@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Thanh toán</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Form -->
+    <section class="container my-5">
+        <h2 class="mb-4">Thanh toán</h2>
+        <form id="checkout-form" novalidate>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" pattern=".+@gmail\.com$" required />
+                <div class="invalid-feedback">Vui lòng nhập email có định dạng @gmail.com hợp lệ.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại *</label>
+                <input type="tel" class="form-control" id="phone" pattern="^[0-9]{10}$" required />
+                <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ (10 chữ số).</div>
+            </div>
+            <div class="mb-3">
+                <label for="idcard" class="form-label">Số căn cước / CMND *</label>
+                <input type="text" class="form-control" id="idcard" pattern="^[0-9]{12}$" required />
+                <div class="invalid-feedback">Vui lòng nhập số căn cước hợp lệ (12 chữ số).</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Thanh toán</button>
+        </form>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 SheepHelmet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            updateCartCount();
+
+            $('#checkout-form').on('submit', function(e) {
+                e.preventDefault();
+                const form = this;
+                if (!form.checkValidity()) {
+                    e.stopPropagation();
+                    $(form).addClass('was-validated');
+                    return;
+                }
+                // Clear cart and redirect to order tracking
+                localStorage.removeItem('sheephelmet_cart');
+                updateCartCount();
+                alert('Thanh toán thành công! Chuyển đến trang theo dõi đơn hàng.');
+                window.location.href = 'order.html';
+            });
+        });
+    </script>
+</body>
+</html>

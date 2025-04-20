@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Chi tiết sản phẩm</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+    <style>
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container my-5" id="product-detail">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="" alt="" class="product-image img-fluid mb-3" id="product-image-detail">
+            </div>
+            <div class="col-md-6">
+                <h2 id="product-name-detail"></h2>
+                <p class="lead" id="product-price-detail"></p>
+                <p id="product-description-detail">
+                    </p>
+                <button class="btn btn-primary btn-lg" id="add-to-cart-detail">Thêm vào giỏ hàng</button>
+                <a href="products.html" class="btn btn-secondary mt-3">Quay lại trang sản phẩm</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy;
+                <?php echo date('Y'); ?> SheepHelmet. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            updateCartCount();
+
+            // Lấy ID sản phẩm từ tham số URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (productId) {
+                // Tìm sản phẩm trong mảng products dựa trên ID
+                const product = products.find(p => p.id === productId);
+
+                if (product) {
+                    // Hiển thị thông tin chi tiết sản phẩm
+                    $('#product-name-detail').text(product.name);
+                    $('#product-price-detail').text(product.price.toLocaleString('vi-VN') + ' ₫');
+                    $('#product-image-detail').attr('src', product.image).attr('alt', product.name);
+                    // Thêm mô tả sản phẩm (nếu có thuộc tính description trong dữ liệu sản phẩm)
+                    if (product.description) {
+                        $('#product-description-detail').text(product.description);
+                    } else {
+                        $('#product-description-detail').text('Không có mô tả chi tiết cho sản phẩm này.');
+                    }
+
+                    // Xử lý sự kiện khi nhấp vào nút "Thêm vào giỏ hàng" trên trang chi tiết
+                    $('#add-to-cart-detail').on('click', function() {
+                        addToCart(productId);
+                    });
+                } else {
+                    // Xử lý trường hợp không tìm thấy sản phẩm
+                    $('#product-detail').html('<p class="text-danger">Không tìm thấy sản phẩm!</p>');
+                }
+            } else {
+                // Xử lý trường hợp không có ID sản phẩm trên URL
+                $('#product-detail').html('<p class="text-warning">Thiếu thông tin sản phẩm.</p>');
+            }
+        });
+    </script>
+</body>
+</html>

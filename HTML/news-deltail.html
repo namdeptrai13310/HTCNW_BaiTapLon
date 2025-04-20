@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Chi tiết tin tức</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- News Detail -->
+    <section class="container my-5">
+        <h2 class="mb-4" id="news-title">Tiêu đề tin tức</h2>
+        <img id="news-image" src="../images/news1.jpg" alt="Tin tức" class="img-fluid mb-4" />
+        <p id="news-content">Nội dung chi tiết tin tức sẽ được hiển thị ở đây.</p>
+        <a href="news.html" class="btn btn-secondary mt-3">Quay lại danh sách tin tức</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 SheepHelmet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            updateCartCount();
+
+            // Simple news data for demo
+            const newsData = {
+                1: {
+                    title: "Tin tức 1",
+                    image: "../images/news1.jpg",
+                    content: "Thông tin mới nhất về mũ bảo hiểm và các chương trình khuyến mãi."
+                },
+                2: {
+                    title: "Tin tức 2",
+                    image: "../images/news2.jpg",
+                    content: "Cập nhật các mẫu mũ bảo hiểm mới nhất trên thị trường."
+                },
+                3: {
+                    title: "Tin tức 3",
+                    image: "../images/news3.jpg",
+                    content: "Hướng dẫn chọn mũ bảo hiểm phù hợp với từng loại xe."
+                }
+            };
+
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            const newsId = getQueryParam('id');
+            if (newsId && newsData[newsId]) {
+                $('#news-title').text(newsData[newsId].title);
+                $('#news-image').attr('src', newsData[newsId].image);
+                $('#news-content').text(newsData[newsId].content);
+            } else {
+                $('#news-title').text('Tin tức không tồn tại');
+                $('#news-image').hide();
+                $('#news-content').text('Không tìm thấy tin tức bạn yêu cầu.');
+            }
+        });
+    </script>
+</body>
+</html>

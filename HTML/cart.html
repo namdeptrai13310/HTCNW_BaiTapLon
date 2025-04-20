@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SheepHelmet - Giỏ hàng</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logochinh.jpg" alt="SheepHelmet" height="40" />
+                SheepHelmet
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="intro.html">INTRO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Infomation.html">Admin</a></li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link active" href="cart.html" title="Giỏ hàng">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Content -->
+    <section class="container my-5">
+        <h2 class="mb-4">Giỏ hàng của bạn</h2>
+        <div id="cart-items" class="mb-4">
+            <!-- Cart items will be injected here -->
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <button id="continue-shopping" class="btn btn-secondary">Tiếp tục mua sắm</button>
+            </div>
+            <div>
+                <strong>Tổng tiền: </strong><span id="cart-total">0 ₫</span>
+                <button id="checkout-btn" class="btn btn-primary ms-3">Thanh toán</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5 py-4 border-top">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 SheepHelmet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/main.js"></script>
+    <script>
+        function renderCart() {
+            const cart = getCart();
+            const container = $('#cart-items');
+            container.empty();
+            let total = 0;
+            if (Object.keys(cart).length === 0) {
+                container.html('<p>Giỏ hàng của bạn đang trống.</p>');
+                $('#cart-total').text('0 ₫');
+                return;
+            }
+            for (const productId in cart) {
+                const quantity = cart[productId];
+                const product = products.find(p => p.id === productId);
+                if (!product) continue;
+                const itemTotal = product.price * quantity;
+                total += itemTotal;
+                const item = $(`
+                    <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                        <img src="${product.image}" alt="${product.name}" style="width: 100px; height: 80px; object-fit: contain;" />
+                        <div class="ms-3 flex-grow-1">
+                            <h5>${product.name}</h5>
+                            <p>Giá: ${product.price.toLocaleString('vi-VN')} ₫</p>
+                            <p>Số lượng: 
+                                <button class="btn btn-sm btn-outline-secondary decrease-qty" data-id="${productId}">-</button>
+                                <span class="mx-2">${quantity}</span>
+                                <button class="btn btn-sm btn-outline-secondary increase-qty" data-id="${productId}">+</button>
+                            </p>
+                        </div>
+                        <div>
+                            <p><strong>${itemTotal.toLocaleString('vi-VN')} ₫</strong></p>
+                            <button class="btn btn-danger btn-sm remove-item" data-id="${productId}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `);
+                container.append(item);
+            }
+            $('#cart-total').text(total.toLocaleString('vi-VN') + ' ₫');
+        }
+
+        $(document).ready(function() {
+            renderCart();
+            updateCartCount();
+
+            $('#continue-shopping').click(function() {
+                window.location.href = 'products.html';
+            });
+
+            $('#checkout-btn').click(function() {
+                if (Object.keys(getCart()).length === 0) {
+                    alert('Giỏ hàng của bạn đang trống.');
+                    return;
+                }
+                window.location.href = 'checkout.html';
+            });
+
+            $(document).on('click', '.increase-qty', function() {
+                const id = $(this).data('id');
+                const cart = getCart();
+                cart[id] = (cart[id] || 0) + 1;
+                saveCart(cart);
+                renderCart();
+            });
+
+            $(document).on('click', '.decrease-qty', function() {
+                const id = $(this).data('id');
+                const cart = getCart();
+                if (cart[id] > 1) {
+                    cart[id]--;
+                } else {
+                    delete cart[id];
+                }
+                saveCart(cart);
+                renderCart();
+            });
+
+            $(document).on('click', '.remove-item', function() {
+                const id = $(this).data('id');
+                const cart = getCart();
+                delete cart[id];
+                saveCart(cart);
+                renderCart();
+            });
+        });
+    </script>
+</body>
+</html>
